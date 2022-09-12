@@ -1,3 +1,7 @@
+const fs = require('fs');
+var chat_stream = fs.createWriteStream("chat.log", { flags: 'a' });
+chat_stream.on('error', function (err) { console.log(err); });
+
 const tmi = require('tmi.js');
 const credentials = require('./credentials.js');
 const battlefy_api = require('../battlefy-api/');
@@ -26,9 +30,13 @@ function onConnected(address, port) {
 
 function onDisconnected(reason) {
 	console.log(`* seshbot disconnected! Reason: ${reason}.`);
+	chat_stream.end('Error: seshbot disconnected!');
 }
 
 function onChatting(channel, tags, message, self) {
+	//TODO: detect (code or terminal setting) ANSI color codes in chat message. At least send the username in a different color than white
+	//chat_stream.once('open', function(fd) { chat_stream.write(message); chat_stream.end(); });
+	chat_stream.write(tags.username + ": " + message + `\n`);
 	if(self || !message.startsWith('!')) {
 		return;
 	}
@@ -52,6 +60,8 @@ function onChatting(channel, tags, message, self) {
 					break;
 				case 'jotson':
 					response += ` ${streamer} has released Gravity Ace: a 2D multi-directional gravity shooter (cave-flyer). Go wishlist the game on https://store.steampowered.com/app/1003860/Gravity_Ace/ !`
+				case 'moonfassa':
+					response += ` ${streamer} is a competitive Faeria streamer and content creator. Check out also his Youtube channel: https://www.youtube.com/c/Moonfassa !`
 					break;
 			}
 			seshbot.say(channel, response);
@@ -109,11 +119,11 @@ function onChatting(channel, tags, message, self) {
 function get_upcoming_Faeria_tournament() {
 	//TODO: use Battlefy API to automate getting the upcoming Faeria tournament, if any!
 	var tournament = {
-		ID: "631543fe3bf2cf16b269f879",
-		name: "Khalim Open #3",
-		date: "Saturday, September 10th",
+		ID: "63154454d1b59f432de95b7c",
+		name: "Khalim Open #4",
+		date: "Saturday, September 24th",
 		time: "18:00 CEST",
-		link: "https://battlefy.com/abrakam-entertainment/khalim-open-3-2022/631543fe3bf2cf16b269f879/info",
+		link: "https://battlefy.com/abrakam-entertainment/khalim-open-4-2022/63154454d1b59f432de95b7c/info",
 		valid: true	//to be removed if tournament gathering is automated!
 	}
 	return tournament;
