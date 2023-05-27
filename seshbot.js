@@ -6,6 +6,9 @@ const tmi = require('tmi.js');
 const credentials = require('./credentials.js');
 const battlefy_api = require('../battlefy-api/');
 
+const { exec } = require('child_process');
+
+
 const config = {
 	channels: [ 'seshoumara' ],
 	identity: {
@@ -24,6 +27,8 @@ seshbot.on('raided', onRaided);
 seshbot.on('hosted', onHosted);
 seshbot.connect().catch(console.error);
 
+const max_TTS_msg_length = 200;
+
 function onConnected(address, port) {
 	console.log(`* seshbot connected to ${address}:${port} successfully!`);
 }
@@ -40,7 +45,7 @@ function onChatting(channel, tags, message, self) {
 	if(self || !message.startsWith('!')) {
 		return;
 	}
-	const cmd = message.trim();
+	var cmd = message.trim();
 	var success = false;
 	var skipped = false;
 	
@@ -50,18 +55,28 @@ function onChatting(channel, tags, message, self) {
 			var response = `[seshbot] Check out ${streamer} and follow his stream at https://www.twitch.tv/${streamer} !`;
 			switch(streamer) {
 				case 'Aarimous':
-					response += ` ${streamer} is working on releasing Chess Survivors: a grid based, quick-turn, roguelike where you outmaneuver and destroy an ever growing horde of chess enemies. Go wishlist the game on https://store.steampowered.com/app/2065000/Chess_Survivors/ !`;
+					response += ` ${streamer} has released Chess Survivors: a grid based, quick-turn, roguelike where you outmaneuver and destroy an ever growing horde of chess enemies. Go wishlist the game at https://store.steampowered.com/app/2065000/Chess_Survivors/ !`;
 					break;
-				case 'joxon_art':
+				case 'joxonman':
 					response += ` Joxon is an amazing Fantasy Artist, you can see his portfolio at https://darkojovanov.artstation.com/ !`;
 					break;
 				case 'dev_spajus':
-					response += ` ${streamer} is working on releasing Stardeus: a sci-fi colony management simulator with aspects of automation, base building and space exploration. Go wishlist the game on https://store.steampowered.com/app/1380910/Stardeus/ !`
+					response += ` ${streamer} has released Stardeus: a sci-fi colony management simulator with aspects of automation, base building and space exploration. Go wishlist the game at https://store.steampowered.com/app/1380910/Stardeus/ !`;
 					break;
 				case 'jotson':
-					response += ` ${streamer} has released Gravity Ace: a 2D multi-directional gravity shooter (cave-flyer). Go wishlist the game on https://store.steampowered.com/app/1003860/Gravity_Ace/ !`
+					response += ` ${streamer} has released Gravity Ace: a 2D multi-directional gravity shooter (cave-flyer). Go wishlist the game at https://store.steampowered.com/app/1003860/Gravity_Ace/ !`;
+					break;
+				case 'RedCabinGames':
+					response += ` ${streamer} is working on releasing Space Scavenger 2: an Action-Roguelike where you scavenge for modules to build a hodgepodge spaceship. Go wishlist the game at https://store.steampowered.com/app/1962010/Space_Scavenger_2/ !`;
+					break;
+				case 'Lentsius':
+					response += ` ${streamer} is working on releasing Cardbob: explore the sci-fi dungeons, collect loot, and negotiate the highest prices in this action roguelite, set in a 3D cardboard world. Go wishlist the game at https://store.steampowered.com/app/1963670/Cardbob/ !`;
+					break;
+				case 'GrumbleOfPugz':
+					response += ` ${streamer} is working on releasing Megabat: a simple action puzzle game where you control a fruit bat to collect fruit. Go play the prototype at https://pugdev.itch.io/megabat !`;
+					break;
 				case 'moonfassa':
-					response += ` ${streamer} is a competitive Faeria streamer and content creator. Check out also his Youtube channel: https://www.youtube.com/c/Moonfassa !`
+					response += ` ${streamer} is a competitive Faeria streamer and content creator. Check out also his Youtube channel at https://www.youtube.com/c/Moonfassa !`
 					break;
 			}
 			seshbot.say(channel, response);
@@ -73,10 +88,11 @@ function onChatting(channel, tags, message, self) {
 			success = true;
 		}
 	}
+	//commands with no arguments
 	if(!success) {
 		switch(cmd) {
 			case '!bot':
-				seshbot.say(channel, `[seshbot] General commands: !bot, !itch, !game, !discord. Faeria commands: !tournament, !players.`);
+				seshbot.say(channel, `[seshbot] General commands: !bot, !itch, !game, !jam, !discord, !tts <text>. Faeria commands: !tournament, !players.`);
 				success = true;
 				break;
 			case '!itch':
@@ -84,7 +100,11 @@ function onChatting(channel, tags, message, self) {
 				success = true;
 				break;
 			case '!game':
-				seshbot.say(channel, `[seshbot] Low Level Hero is a programming-puzzle game with only two commands: copy-paste and search-replace. The alpha version is now out on https://seshoumara.itch.io/low-level-hero !`);
+				seshbot.say(channel, `[seshbot] Low Level Hero is a programming-puzzle game with only two commands: copy-paste and search-replace. Go play the demo at https://seshoumara.itch.io/low-level-hero !`);
+				success = true;
+				break;
+			case '!jam':
+				seshbot.say(channel, `[seshbot] Check out the 10 days Linux Game Jam 2023 at https://itch.io/jam/linux-game-jam2023 !`);
 				success = true;
 				break;
 			case '!discord':
@@ -113,18 +133,35 @@ function onChatting(channel, tags, message, self) {
 				break;
 		}
 	}
+	//commands with arguments
+	if(!success) {
+		if(cmd.startsWith('!tts ')) {
+                        var spoken_message = cmd.slice(5);
+			//my attempt at working around code injection, not sure if it's sufficient
+			spoken_message = spoken_message.replace(/'/g, '');
+			cmd = '!tts ' + spoken_message;
+			if(spoken_message.length <= max_TTS_msg_length) {
+				exec("echo -E -- '" + spoken_message + "'|cut -c4-|festival --tts");
+				console.log("TTS execution in progress ...");
+			}
+			else {
+				skipped = true;
+			}
+			success = true;
+		}
+	}
 	log_command(tags.username, cmd, success, skipped);
 }
 
 function get_upcoming_Faeria_tournament() {
 	//TODO: use Battlefy API to automate getting the upcoming Faeria tournament, if any!
 	var tournament = {
-		ID: "63154454d1b59f432de95b7c",
-		name: "Khalim Open #4",
-		date: "Saturday, September 24th",
-		time: "18:00 CEST",
-		link: "https://battlefy.com/abrakam-entertainment/khalim-open-4-2022/63154454d1b59f432de95b7c/info",
-		valid: true	//to be removed if tournament gathering is automated!
+		ID: "6369738d402e87582ffd5b73",
+		name: "Seifer Open #2",
+		date: "Saturday, November 26th",
+		time: "18:00 CET",
+		link: "https://battlefy.com/abrakam-entertainment/seifer-open-2-2022/6369738d402e87582ffd5b73/info",
+		valid: false	//to be removed if tournament gathering is automated!
 	}
 	return tournament;
 }
