@@ -7,7 +7,7 @@ const { exec } = require("child_process");
 var all_commands_template = [];
 var all_commands = [];
 
-function get_matching_command(username, message) {
+async function get_matching_command(username, message) {
     var raw_command = utils.get_raw_command(message);
     var matched_command;
     for(var c = 0; c < all_commands.length; c++) {
@@ -16,7 +16,7 @@ function get_matching_command(username, message) {
             if(raw_command.startsWith(command["cmd"])) {
                 var argument = raw_command.slice(command["cmd"].length + 1);
                 reset_cmd(c);
-                command["execute_callback"](username, command, argument);
+                await command["execute_callback"](username, command, argument);
                 matched_command = command;
                 break;
             }
@@ -27,7 +27,7 @@ function get_matching_command(username, message) {
         else {
             if(raw_command === command["cmd"]) {
                 reset_cmd(c);
-                command["execute_callback"](username, command, "");
+                await command["execute_callback"](username, command, "");
                 matched_command = command;
                 break;
             }
@@ -169,9 +169,9 @@ function reset_cmd(idx) {
     }
 }
 
-function default_execute(username, command, _) {}
+async function default_execute(username, command, _) {}
 
-function execute_tts(username, command, tts_message) {
+async function execute_tts(username, command, tts_message) {
     var max_TTS_msg_length = 200;
     if(tts_message.length > max_TTS_msg_length) {
         command["skipped"] = true;
@@ -180,7 +180,7 @@ function execute_tts(username, command, tts_message) {
     exec("echo -E -- '" + tts_message + "'|cut -c4-|festival --tts");
 }
 
-function execute_bot(username, command, _) {
+async function execute_bot(username, command, _) {
     var category_commands = {};
     for(var c = 0; c < all_commands.length; c++) {
         var other_command = all_commands[c];

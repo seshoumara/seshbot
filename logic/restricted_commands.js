@@ -25,7 +25,7 @@ const streamers = {
         `is an amazing Fantasy Artist, you can see his portfolio at https://darkojovanov.artstation.com/ !`
 };
 
-function execute_so(username, command, streamer) {
+async function execute_so(username, command, streamer) {
     if(!(allowed_users.includes(username))) {
         command["skipped"] = true;
         return;
@@ -38,8 +38,8 @@ function execute_so(username, command, streamer) {
     command["message"] += " " + streamer + " " + streamers[streamer];
 }
 
-function execute_raid(username, command, streamer) {
-    execute_so(username, command, streamer);
+async function execute_raid(username, command, streamer) {
+    await execute_so(username, command, streamer);
 }
 
 module.exports = {

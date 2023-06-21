@@ -26,11 +26,11 @@ fs.watch(live_msg_file, function (event_type, filename) {
 	fs.readFile(live_msg_file, onLiveCmd_send);
 })
 
-function execute_message_as_command(channel, username, message) {
+async function execute_message_as_command(channel, username, message) {
     if(!message.startsWith('!')) {
 		return false;
 	}
-	var command = commands.get_matching_command(username, message);
+	var command = await commands.get_matching_command(username, message);
     if(command == null) {
         return false;
     }
@@ -55,7 +55,7 @@ function onChatting(channel, tags, message, self) {
     if(self) {
         return;
     }
-	var _ = execute_message_as_command(channel, tags.username, message);
+	execute_message_as_command(channel, tags.username, message);
 }
 
 function onRaided(channel, username, viewers) {
@@ -71,7 +71,7 @@ function onDisconnected(reason) {
 	chat_log.end("Error: " + config.botname + " disconnected!");
 }
 
-function onLiveCmd_send(err, buffer) {
+async function onLiveCmd_send(err, buffer) {
 	if (err) {
 		return;
 	}
@@ -82,7 +82,7 @@ function onLiveCmd_send(err, buffer) {
     }
 	var channel = config.credentials.channels[0];
     var username = config.credentials.identity.username;
-    var success = execute_message_as_command(channel, username, message);
+    var success = await execute_message_as_command(channel, username, message);
     if(!success) {
         seshbot.say(channel, config.botname + " " + message);
     }

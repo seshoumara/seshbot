@@ -15,7 +15,7 @@ function get_upcoming_Faeria_tournament() {
 	}
 }
 
-function execute_tournament(username, command, _) {
+async function execute_tournament(username, command, _) {
     if(!tournament.valid) {
         command["skipped"] = true;
         return;
@@ -23,17 +23,16 @@ function execute_tournament(username, command, _) {
     command["message"] = tournament.name + " starts on " + tournament.date + " at " + tournament.time + ". Please register at " + tournament.link + " !";
 }
 
-function execute_players(username, command, _) {
+async function execute_players(username, command, _) {
     if(!tournament.valid) {
         command["skipped"] = true;
         return;
     }
+    var teams_data = await battlefy_api.getTournamentTeams(tournament.ID);
     var players = [];
-    battlefy_api.getTournamentTeams(tournament.ID).then( function (teams_data) {
-        teams_data.forEach(function (team) {
-            players.push(team.name);
-        });
-    });
+    for(var t = 0; t < teams_data.length; t++) {
+        players.push(teams_data[t].name);
+    };
     command["message"] = "Registered: " + players.join(", ") + ".";
 }
 
