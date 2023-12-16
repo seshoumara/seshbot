@@ -32,9 +32,8 @@ async function execute_so(username, command, streamer) {
     }
     command["Twitch_cmd"] += " " + streamer;
     command["message"] = "Check out " + streamer + " and follow his stream at https://www.twitch.tv/" + streamer + " !";
-    if(!(streamer in streamers)) {
+    if(!(streamer in streamers))
         return;
-    }
     command["message"] += " " + streamer + " " + streamers[streamer];
 }
 
@@ -43,6 +42,6 @@ async function execute_raid(username, command, streamer) {
 }
 
 module.exports = {
-	execute_so: execute_so,
-	execute_raid: execute_raid
+    execute_so: execute_so,
+    execute_raid: execute_raid
 };

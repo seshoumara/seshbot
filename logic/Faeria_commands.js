@@ -1,18 +1,18 @@
-const battlefy_api = require("../../battlefy-api/");
+const battlefy_api = require("../include/battlefy-api/");
 
-var tournament = get_upcoming_Faeria_tournament()
+var tournament = get_upcoming_Faeria_tournament();
 
 function get_upcoming_Faeria_tournament() {
-	//TODO: use Battlefy API to automate getting the upcoming Faeria tournament
-	return {
-		ID: "648a7273b9bd865dcf2702ab",
-		name: "Ruunin Open #2",
-		date: "Saturday, June 24th",
-		time: "18:00 CEST",
-		link: "https://battlefy.com/abrakam-entertainment/ruunin-open-2/648a7273b9bd865dcf2702ab/info",
+    //TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
+    return {
+        ID: "656cf22b7955cb14eb16f0ab",
+        name: "Seifer Open #5",
+        date: "Saturday, December 23rd",
+        time: "19:00 EET",
+        link: "https://battlefy.com/abrakam-entertainment/seifer-open-5/656cf22b7955cb14eb16f0ab/info",
         //if none, then mark it as invalid
-		valid: true
-	}
+        valid: true
+    }
 }
 
 async function execute_tournament(username, command, _) {
@@ -23,6 +23,7 @@ async function execute_tournament(username, command, _) {
     command["message"] = tournament.name + " starts on " + tournament.date + " at " + tournament.time + ". Please register at " + tournament.link + " !";
 }
 
+//TODO: cache data of previous request from Twitch and update only if no cache or time past is at least 5 minutes (reduce usage of Battlefy's API)
 async function execute_players(username, command, _) {
     if(!tournament.valid) {
         command["skipped"] = true;

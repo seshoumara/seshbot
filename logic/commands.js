@@ -177,6 +177,7 @@ async function execute_tts(username, command, tts_message) {
         command["skipped"] = true;
         return;
     }
+    //BUG: the festival command crashes, no sound (tested on Ubuntu)
     exec("echo -E -- '" + tts_message + "'|cut -c4-|festival --tts");
 }
 
@@ -184,23 +185,19 @@ async function execute_bot(username, command, _) {
     var category_commands = {};
     for(var c = 0; c < all_commands.length; c++) {
         var other_command = all_commands[c];
-        if(other_command["hide"]) {
+        if(other_command["hide"])
             continue;
-        }
-        if(!(other_command["category"] in category_commands)) {
+        if(!(other_command["category"] in category_commands))
             category_commands[other_command["category"]] = "";
-        }
         category_commands[other_command["category"]] += " " + other_command["cmd"];
-        if(other_command["argument_hint"] != "") {
+        if(other_command["argument_hint"] != "")
             category_commands[other_command["category"]] += " " + other_command["argument_hint"];
-        }
         category_commands[other_command["category"]] += ",";
     }
     command["message"] = "General:" + category_commands["General"] + ".";
     for(var categ in category_commands) {
-        if(categ != "General") {
+        if(categ != "General")
             command["message"] += " " + categ + ":" + category_commands[categ] + ".";
-        }
     }
     command["message"] = command["message"].replace(/,\./g, '.');
 }

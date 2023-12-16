@@ -4,10 +4,9 @@
   "description": "seshoumara's Twitch chatbot",
   "main": "seshbot.js",
   "scripts": {
-    "start": "/snap/node/6331/bin/node seshbot.js"
+    "start": "node seshbot.js"
   },
   "dependencies": {
     "tmi.js": "^1.8.5"
-  },
-  "devDependencies": {}
+  }
 }
