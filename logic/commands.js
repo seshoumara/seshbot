@@ -7,6 +7,9 @@ const { exec } = require("child_process");
 var all_commands_template = [];
 var all_commands = [];
 
+//REFACTOR ideas:
+//1. name is misleading, it also executes the matched command
+//2. it is not immediately clear why reset_cmd is needed (its implementation is also a bit cryptic)
 async function get_matching_command(username, message) {
     var raw_command = utils.get_raw_command(message);
     var matched_command;
@@ -40,6 +43,10 @@ async function get_matching_command(username, message) {
     return matched_command;
 }
 
+//REFACTOR ideas:
+//1. should differentiate between commands that when executed call system commands or APIs and commands that need no external input
+//2. would be nice to have the simple commands (static text only) read from a JSON file, so new ones can be created faster and not using code
+//3. the word 'execute' isn't self-explanatory: these callbacks fill the dict keys, but the Twitch logic is in seshbot.js
 function register_all_commands() {
     all_commands_template.push({
         "category": "General",

@@ -9,11 +9,9 @@ function sleep(ms) {
 async function test_tournament_players(tournament_ID) {
     const teams_data = await battlefy_api.getTournamentTeams(tournament_ID);
     var players = [];
-    teams_data.forEach(
-        function (team) {
-            players.push(team.name);
-        }
-    );
+    for(var t = 0; t < teams_data.length; t++) {
+        players.push(teams_data[t].name);
+    };
     console.log(players.join(", "));
     await sleep(60000);
 }
@@ -33,8 +31,8 @@ async function main() {
     console.log("Starting tests with tournament ID: " + tournament_ID + "\n");
     console.log("-> Registered players:");
     await test_tournament_players(tournament_ID);
-    console.log("-> Matches:");
-    await test_tournament_matches(tournament_ID);
+    //console.log("-> Matches:");
+    //await test_tournament_matches(tournament_ID);
     console.log("\nTests finished!");
 }
 
