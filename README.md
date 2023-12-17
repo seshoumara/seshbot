@@ -9,9 +9,14 @@ Custom Twitch chat bot written in Node.js, for personal use.
 - Faeria: !tournament, !players
 - Twitch (restricted): !so <streamer>, !raid <streamer>
 
+## Screenshots:
+
 **seshbot** running on Linux server
+
 ![seshbot server](https://raw.githubusercontent.com/seshoumara/seshbot/main/Screenshots/seshbot_CLI.png)
+
 **seshbot** usage in my Twitch chat
+
 ![seshbot Twitch](https://raw.githubusercontent.com/seshoumara/seshbot/main/Screenshots/seshbot_Twitch.png)
 
 ### Known issues:
