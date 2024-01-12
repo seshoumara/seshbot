@@ -1,8 +1,8 @@
 const allowed_users = [ "seshoumara" ];
-var streamers = {};
+let streamers = {};
 
 function parse_streamers(buffer) {
-    var json = buffer.toString().trim();
+    let json = buffer.toString().trim();
     streamers = JSON.parse(json);
 }
 

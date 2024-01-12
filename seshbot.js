@@ -13,13 +13,13 @@ const static_commands_JSON_file = "./data/commands.json"
 const streamers_JSON_file = "./data/streamers.json";
 
 const seshbot = new tmi.client(config.credentials);
-var chat_log = fs.createWriteStream(chat_log_file, { flags: 'a' });
+let chat_log = fs.createWriteStream(chat_log_file, { flags: 'a' });
 
 async function main() {
     chat_log.on("error", utils.log_error);
     try {
-        var static_commands_buffer = await fsPromises.readFile(static_commands_JSON_file);
-        var streamers_buffer = await fsPromises.readFile(streamers_JSON_file);
+        let static_commands_buffer = await fsPromises.readFile(static_commands_JSON_file);
+        let streamers_buffer = await fsPromises.readFile(streamers_JSON_file);
         await commands.parse_static_commands(static_commands_buffer);
         await restricted_commands.parse_streamers(streamers_buffer);
     }
@@ -39,7 +39,7 @@ async function main() {
 async function execute_message_as_command(channel, username, message) {
     if(!message.startsWith('!'))
         return false;
-    var command = await commands.execute_matching_command(username, message);
+    let command = await commands.execute_matching_command(username, message);
     if(command == null)
         return false;
     if(command["skipped"] || command["message"] === "")
@@ -88,13 +88,13 @@ function read_live_msg_file(event_type, filename) {
 async function onLiveCmd_send(err, buffer) {
     if (err)
         return;
-    var message = buffer.toString().trim();
-    var message = message.split(/\r?\n/)[0];
+    let message = buffer.toString().trim();
+    message = message.split(/\r?\n/)[0];
     if(message === "")
         return;
-    var channel = config.credentials.channels[0];
-    var username = config.credentials.identity.username;
-    var success = await execute_message_as_command(channel, username, message);
+    let channel = config.credentials.channels[0];
+    let username = config.credentials.identity.username;
+    let success = await execute_message_as_command(channel, username, message);
     if(!success)
         seshbot.say(channel, config.botname + " " + message);
 }

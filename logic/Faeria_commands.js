@@ -1,6 +1,6 @@
 const battlefy_api = require("../include/battlefy-api/");
 
-var tournament = get_upcoming_Faeria_tournament();
+let tournament = get_upcoming_Faeria_tournament();
 
 //TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
 function get_upcoming_Faeria_tournament() {
@@ -29,9 +29,9 @@ async function execute_players(username, command, _) {
         command["skipped"] = true;
         return;
     }
-    var teams_data = await battlefy_api.getTournamentTeams(tournament.ID);
-    var players = [];
-    for(var t = 0; t < teams_data.length; t++) {
+    let teams_data = await battlefy_api.getTournamentTeams(tournament.ID);
+    let players = [];
+    for(let t = 0; t < teams_data.length; t++) {
         players.push(teams_data[t].name);
     };
     command["message"] = "Registered: " + players.join(", ") + ".";

@@ -10,8 +10,8 @@ const streamers_JSON_file = "./data/streamers.json";
 
 async function load_test_dependencies() {
     try {
-        var static_commands_buffer = await fsPromises.readFile(static_commands_JSON_file);
-        var streamers_buffer = await fsPromises.readFile(streamers_JSON_file);
+        let static_commands_buffer = await fsPromises.readFile(static_commands_JSON_file);
+        let streamers_buffer = await fsPromises.readFile(streamers_JSON_file);
         await commands.parse_static_commands(static_commands_buffer);
         await restricted_commands.parse_streamers(streamers_buffer);
     }

@@ -8,8 +8,8 @@ function sleep(ms) {
 
 async function test_tournament_players(tournament_ID) {
     const teams_data = await battlefy_api.getTournamentTeams(tournament_ID);
-    var players = [];
-    for(var t = 0; t < teams_data.length; t++) {
+    let players = [];
+    for(let t = 0; t < teams_data.length; t++) {
         players.push(teams_data[t].name);
     };
     console.log(players.join(", "));

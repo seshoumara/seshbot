@@ -9,7 +9,7 @@ function log_error(err) {
 }
 
 function log_command(username, command, is_matched, is_skipped) {
-    var state = "Executed";
+    let state = "Executed";
     if(is_skipped)
         state = "Skipped";
     if(!is_matched)
@@ -18,7 +18,7 @@ function log_command(username, command, is_matched, is_skipped) {
 }
 
 function get_raw_command(message) {
-    var raw_command = message.trim();
+    let raw_command = message.trim();
     raw_command = raw_command.replace(/'/g, '');
     raw_command = raw_command.replace(/"/g, '');
     return raw_command;
