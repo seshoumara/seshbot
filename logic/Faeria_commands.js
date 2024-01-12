@@ -2,8 +2,8 @@ const battlefy_api = require("../include/battlefy-api/");
 
 var tournament = get_upcoming_Faeria_tournament();
 
+//TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
 function get_upcoming_Faeria_tournament() {
-    //TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
     return {
         ID: "656cf22b7955cb14eb16f0ab",
         name: "Seifer Open #5",

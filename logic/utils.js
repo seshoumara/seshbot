@@ -4,6 +4,10 @@ function sleep(ms) {
     });
 }
 
+function log_error(err) {
+    console.log(err);
+}
+
 function log_command(username, command, is_matched, is_skipped) {
     var state = "Executed";
     if(is_skipped)
@@ -22,6 +26,7 @@ function get_raw_command(message) {
 
 module.exports = {
     sleep: sleep,
+    log_error: log_error,
     log_command: log_command,
     get_raw_command: get_raw_command
 };

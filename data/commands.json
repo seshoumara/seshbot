@@ -1,0 +1,42 @@
+[
+        {
+            "category": "General",
+            "hide": false,
+            "cmd": "!itch",
+            "has_argument": false,
+            "argument_hint": "",
+            "Twitch_cmd": "",
+            "message": "Check out my game dev profile at https://seshoumara.itch.io !",
+            "skipped": false
+        },
+        {
+            "category": "General",
+            "hide": false,
+            "cmd": "!LLH",
+            "has_argument": false,
+            "argument_hint": "",
+            "Twitch_cmd": "",
+            "message": "Low Level Hero is a programming-puzzle game with only two commands: copy-paste and search-replace. Try the game at https://seshoumara.itch.io/low-level-hero !",
+            "skipped": false
+        },
+        {
+            "category": "General",
+            "hide": false,
+            "cmd": "!jam",
+            "has_argument": false,
+            "argument_hint": "",
+            "Twitch_cmd": "",
+            "message": "Check out my latest game jam entry at https://itch.io/jam/linux-game-jam2023/rate/2106142 !",
+            "skipped": false
+        },
+        {
+            "category": "General",
+            "hide": false,
+            "cmd": "!discord",
+            "has_argument": false,
+            "argument_hint": "",
+            "Twitch_cmd": "",
+            "message": "Please join my Discord server at https://discord.gg/8pWpB59YKZ !",
+            "skipped": false
+        }
+]

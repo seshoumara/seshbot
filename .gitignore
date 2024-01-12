@@ -1,4 +1,4 @@
 config.js
+festival_voices/**
 node_modules/**
 include/battlefy-api/node_modules/**
-festival_voices/**
