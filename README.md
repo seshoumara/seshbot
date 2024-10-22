@@ -5,7 +5,7 @@ Custom Twitch chat bot written in Node.js, for personal use.
 ## Available commands:
 
 - static: !itch, !LLH, !jam, !discord (these commands moved from code to JSON file, to edit/add new ones much easier)
-- general: !bot
+- automatic: !bot
 - text to speech: !tts <test>
 - Faeria: !tournament, !players
 - Twitch (restricted): !so <streamer>, !raid <streamer> (streamer data moved from code to JSON file, to edit it much easier)
