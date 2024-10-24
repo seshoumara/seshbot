@@ -1,4 +1,6 @@
 config.js
+IO/chat.log
+IO/live_message.txt
 festival_voices/**
 node_modules/**
 include/battlefy-api/node_modules/**

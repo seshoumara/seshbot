@@ -77,10 +77,10 @@ function onDisconnected(reason) {
 
 function read_live_msg_file(event_type, filename) {
     //fs.watch triggers the file's change event twice!? Using a toggling bool to deny one trigger. May not work on all OSs.
-    if(typeof watch_live_msg_file.accept_event == 'undefined')
-        watch_live_msg_file.accept_event = false;
-    watch_live_msg_file.accept_event = !watch_live_msg_file.accept_event;
-    if(!watch_live_msg_file.accept_event)
+    if(typeof accept_event === 'undefined')
+        accept_event = false;
+    accept_event = !accept_event;
+    if(!accept_event)
         return;
     fs.readFile(live_msg_file, onLiveCmd_send);
 }

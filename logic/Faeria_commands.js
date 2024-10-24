@@ -5,11 +5,11 @@ let tournament = get_upcoming_Faeria_tournament();
 //TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
 function get_upcoming_Faeria_tournament() {
     return {
-        ID: "656cf22b7955cb14eb16f0ab",
-        name: "Seifer Open #5",
-        date: "Saturday, December 23rd",
-        time: "19:00 EET",
-        link: "https://battlefy.com/abrakam-entertainment/seifer-open-5/656cf22b7955cb14eb16f0ab/info",
+        ID: "670f2ac8d9120600378e2e0a",
+        name: "Khalim Seasonal Cup",
+        date: "Saturday, October 26th",
+        time: "17:00 EET",
+        link: "https://battlefy.com/abrakam-entertainment/khalim-seasonal-cup/670f2ac8d9120600378e2e0a/info",
         //if none, then mark it as invalid
         valid: true
     }
