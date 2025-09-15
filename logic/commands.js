@@ -21,7 +21,7 @@ async function execute_matching_command(username, message) {
         if(command["has_argument"]) {
             if(raw_command.startsWith(command["cmd"])) {
                 let argument = raw_command.slice(command["cmd"].length + 1);
-                reset_command_to_template(c);
+                reset_command_to_template(command);
                 if("execute_callback" in command)
                     await command["execute_callback"](username, command, argument);
                 matched_command = command;
@@ -30,7 +30,7 @@ async function execute_matching_command(username, message) {
             continue;
         }
         if(raw_command === command["cmd"]) {
-            reset_command_to_template(c);
+            reset_command_to_template(command);
             if("execute_callback" in command)
                 await command["execute_callback"](username, command, "");
             matched_command = command;
@@ -63,7 +63,7 @@ function register_all_commands() {
     }
     all_commands_template.push({
         "category": "General",
-        "hide": false,
+        "hide": true,
         "cmd": "!tts",
         "has_argument": true,
         "argument_hint": "<text>",
@@ -96,7 +96,7 @@ function register_all_commands() {
     });
     all_commands_template.push({
         "category": "Faeria",
-        "hide": false,
+        "hide": true,
         "cmd": "!tournament",
         "has_argument": false,
         "argument_hint": "",
@@ -107,7 +107,7 @@ function register_all_commands() {
     });
     all_commands_template.push({
         "category": "Faeria",
-        "hide": false,
+        "hide": true,
         "cmd": "!players",
         "has_argument": false,
         "argument_hint": "",
@@ -118,6 +118,8 @@ function register_all_commands() {
     });
     for(let c = 0; c < all_commands_template.length; c++) {
         let command = all_commands_template[c];
+        if(command["hide"])
+            continue;
         let command_clone = {};
         for(let key in command) {
             command_clone[key] = command[key];
@@ -126,12 +128,21 @@ function register_all_commands() {
     }
 }
 
-function reset_command_to_template(idx) {
+function reset_command_to_template(command) {
     //a prior command execution changes the following keys
     let keys = [ "Twitch_cmd", "message", "skipped" ];
+    //all_commands and all_commands_template have different sizes/order!
+    let command_template;
+    for(let c = 0; c < all_commands_template.length; c++) {
+        let command_candidate = all_commands_template[c];
+        if(command["cmd"] === command_candidate["cmd"]) {
+            command_template = command_candidate;
+            break;
+        }
+    }
     for(let k = 0; k < keys.length; k++) {
         let key = keys[k];
-        all_commands[idx][key] = all_commands_template[idx][key];
+        command[key] = command_template[key];
     }
 }
 

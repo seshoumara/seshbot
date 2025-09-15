@@ -21,7 +21,7 @@
         },
         {
             "category": "General",
-            "hide": false,
+            "hide": true,
             "cmd": "!jam",
             "has_argument": false,
             "argument_hint": "",

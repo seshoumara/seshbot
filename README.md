@@ -4,11 +4,11 @@ Custom Twitch chat bot written in Node.js, for personal use.
 
 ## Available commands:
 
-- static: !itch, !LLH, !jam, !discord (these commands moved from code to JSON file, to edit/add new ones much easier)
+- static: !itch, !LLH, !discord (stored not in code but in JSON file, to edit/add new ones much easier)
 - automatic: !bot
-- text to speech: !tts <test>
-- Faeria: !tournament, !players
-- Twitch (restricted): !so <streamer>, !raid <streamer> (streamer data moved from code to JSON file, to edit it much easier)
+- Twitch (restricted): !so <streamer>, !raid <streamer> (streamer data stored not in code but in JSON file, to edit it much easier)
+
+There's also the ability to hide commands, not just from !bot output but also from recognizing and executing them.
 
 ## Screenshots:
 
@@ -22,4 +22,4 @@ Custom Twitch chat bot written in Node.js, for personal use.
 
 ### Known issues:
 
-- the festival command called by !tts breaks down on my new Ubuntu system, no sound is played
+- the festival command called by !tts breaks down on my new Ubuntu system, no sound is played (command hidden for now)

@@ -5,15 +5,28 @@ let tournament = get_upcoming_Faeria_tournament();
 //TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
 function get_upcoming_Faeria_tournament() {
     return {
-        ID: "670f2ac8d9120600378e2e0a",
-        name: "Khalim Seasonal Cup",
-        date: "Saturday, October 26th",
-        time: "17:00 EET",
-        link: "https://battlefy.com/abrakam-entertainment/khalim-seasonal-cup/670f2ac8d9120600378e2e0a/info",
+        ID: "6882eb273181c6002105365e",
+        name: "Khalim open #1",
+        date: "Saturday, August 9th",
+        time: "19:00 EEST",
+        link: "https://battlefy.com/abrakam-entertainment/khalim-open-1-2025/6882eb273181c6002105365e/info",
         //if none, then mark it as invalid
         valid: true
     }
 }
+
+////TODO: use Battlefy API to automate getting the upcoming Faeria tournament (do it once at the start of seshbot)
+//function get_upcoming_Faeria_tournament() {
+   // return {
+        //ID: "6882ee610c0c7c00228f4f47",
+        //name: "Khalim Open #2",
+        //date: "Saturday, August 23rd",
+        //time: "19:00 EEST",
+        //link: "https://battlefy.com/abrakam-entertainment/khalim-open-2-2025/6882ee610c0c7c00228f4f47/info",
+        ////if none, then mark it as invalid
+        //valid: true
+    //}
+//}
 
 async function execute_tournament(username, command, _) {
     if(!tournament.valid) {
