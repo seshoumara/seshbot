@@ -74,7 +74,7 @@ function register_all_commands() {
     });
     all_commands_template.push({
         "category": "Restricted",
-        "hide": true,
+        "hide": false,
         "cmd": "!so",
         "has_argument": true,
         "argument_hint": "<streamer>",
@@ -85,7 +85,7 @@ function register_all_commands() {
     });
     all_commands_template.push({
         "category": "Restricted",
-        "hide": true,
+        "hide": false,
         "cmd": "!raid",
         "has_argument": true,
         "argument_hint": "<streamer>",

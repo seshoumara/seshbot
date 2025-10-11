@@ -21,12 +21,12 @@
         },
         {
             "category": "General",
-            "hide": true,
+            "hide": false,
             "cmd": "!jam",
             "has_argument": false,
             "argument_hint": "",
             "Twitch_cmd": "",
-            "message": "Check out my last game jam entry at https://itch.io/jam/linux-game-jam2023/rate/2106142 !",
+            "message": "Check out my Ludum Dare 58 game jam entry at https://ldjam.com/events/ludum-dare/58/plantsweeper !",
             "skipped": false
         },
         {
